@@ -1,15 +1,4 @@
 /*-------------------------------- Constants --------------------------------*/
-const squareEls = document.querySelectorAll('.sqr');
-const messageEl = document.querySelector('#message');
-
-console.log(squareEls);
-console.log(messageEl);
-/*---------------------------- Variables (state) ----------------------------*/
-const board = ['', '', '', '', '', '', '', '', ''];
-let turn = "X";
-let winner = false;
-let tie = false;
-
 const winningCombos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -20,11 +9,17 @@ const winningCombos = [
   [0, 4, 8],
   [2, 4, 6]
 ]
-
+/*---------------------------- Variables (state) ----------------------------*/
+const board = ['', '', '', '', '', '', '', '', ''];
+let turn = "X";
+let winner = false;
+let tie = false;
 /*------------------------ Cached Element References ------------------------*/
+const squareEls = document.querySelectorAll('.sqr');
+const messageEl = document.querySelector('#message');
 
-
-
+console.log(squareEls);
+console.log(messageEl);
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
 
@@ -63,8 +58,28 @@ const updateMessage = () => {
         messageEl.textContent = `Cont. playing`;
     }
 };
-/*----------------------------- Event Listeners -----------------------------*/
 
+const handleClick = (event) => {
+    const squareIndex = event.target.id;
+    
+    if (board[squareIndex] !== '') {
+        return;
+    }
+    
+    placePiece(squareIndex);
+
+};
+
+const placePiece = (index) => {
+    board[index] = turn;
+};
+
+const checkForWinner = () => {
+    
+};
+
+/*----------------------------- Event Listeners -----------------------------*/
+squareEls.addEventListener('click', handleClick);
 
 
 init();
