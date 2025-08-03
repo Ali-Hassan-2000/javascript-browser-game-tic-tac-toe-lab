@@ -15,7 +15,7 @@ let turn = "X";
 let winner = false;
 let tie = false;
 /*------------------------ Cached Element References ------------------------*/
-const squareEls = document.querySelectorAll('.sqr');
+const squareEls = document.querySelector('.sqr');
 const messageEl = document.querySelector('#message');
 const resetBtnEl = document.querySelector('#reset');
 /*-------------------------------- Functions --------------------------------*/
