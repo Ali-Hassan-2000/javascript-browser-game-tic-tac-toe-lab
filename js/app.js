@@ -15,7 +15,7 @@ let turn = "X";
 let winner = false;
 let tie = false;
 /*------------------------ Cached Element References ------------------------*/
-const squareEls = document.querySelector('.sqr');
+const squareEls = document.querySelectorAll('.sqr');
 const messageEl = document.querySelector('#message');
 const resetBtnEl = document.querySelector('#reset');
 /*-------------------------------- Functions --------------------------------*/
@@ -33,13 +33,13 @@ const updateBoard = () => {
         squareEls[idx].textContent = cell;
 
         if (cell === 'X') {
-            square.style.color = 'red';
+           /* cell.style.color = 'red'; */
         } 
         else if (cell === 'O') {
-            square.style.color = 'blue';
+           /* cell.style.color = 'blue'; */
         } 
         else {
-            square.style.color = 'black';
+           /* cell.style.color = 'black'; */
         }
     });
 };
@@ -119,5 +119,8 @@ const switchPlayerTurn = () => {
 };
 
 /*----------------------------- Event Listeners -----------------------------*/
-squareEls.addEventListener('click', handleClick);
+squareEls.forEach((square) => { /* we have 9 .sqr from qeuery selector all */
+    square.addEventListener('click', handleClick);
+});
+
 resetBtnEl.addEventListener('click', init);
