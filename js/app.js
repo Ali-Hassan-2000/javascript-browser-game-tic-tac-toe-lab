@@ -20,6 +20,13 @@ const messageEl = document.querySelector('#message');
 const resetBtnEl = document.querySelector('#reset');
 /*-------------------------------- Functions --------------------------------*/
 const init = () => {
+
+    board.fill(''); // Clear the board
+    turn = "X";
+    winner = false;
+    tie = false;
+    
+    messageEl.style.display = 'block'; // Show the message element
     render();
 };
 
@@ -33,13 +40,13 @@ const updateBoard = () => {
         squareEls[idx].textContent = cell;
 
         if (cell === 'X') {
-           /* cell.style.color = 'red'; */
+           squareEls[idx].style.color = 'red';
         } 
         else if (cell === 'O') {
-           /* cell.style.color = 'blue'; */
+           squareEls[idx].style.color = 'blue';
         } 
         else {
-           /* cell.style.color = 'black'; */
+           squareEls[idx].style.color = 'black';
         }
     });
 };
@@ -52,15 +59,15 @@ const updateMessage = () => {
         messageEl.textContent = `Draw`;
     }
     else{
-        messageEl.textContent = `Cont. playing`;
+        messageEl.textContent = `Player ${turn} wins!`;
     }
 };
 
 const handleClick = (event) => {
     const squareIndex = event.target.id;
     
-    if (board[squareIndex] !== '') {
-        return;
+    if (board[squareIndex] !== '' || winner || tie ) {
+        return; /* if the square i filled then do nothing. (also the game will if there is a winner or tie)*/
     }
     
     placePiece(squareIndex);
@@ -71,6 +78,7 @@ const handleClick = (event) => {
 
     switchPlayerTurn();
 
+    render();
 };
 
 const placePiece = (index) => {
@@ -79,18 +87,26 @@ const placePiece = (index) => {
 
 const checkForWinner = () => {
 
-    board.forEach((idx) => { /* Second loop already checks if empty ('' = false) */
-        if (board[idx] === ''){
+    /* Second loop already checks if empty ('' = false) 
+    
+       for(let i = 0; i < board.length ;i++){
+        if (board[i] === ''){
             return;
         }
-    });
+    }
+    */
 
-    winningCombos.forEach(each_comp => { /* takes each array in winningCombos Obj. and assign it to A,B and C. then check if the values of A,B and C are same. */
-        const [a, b, c] = each_comp;
+    /* takes each array in winningCombos Obj. and assign it to A,B and C. then check if the values of A,B and C are same. */
+
+    for(let i = 0 ; i < winningCombos.length ; i++){
+
+         const [a, b, c] = winningCombos[i];
+
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
             winner = true;
+            return;
         }
-    });
+    }
 };
 
 const checkForTie = () => {
@@ -99,12 +115,20 @@ const checkForTie = () => {
         return;
     }
 
+    for(let i = 0; i < board.length ;i++){
+        if (board[i] === ''){
+            return;
+        }
+    }
+
+    /* forEach loop does not exit the function and stop the iteration in (return; , so I will use forloop)
+
     board.forEach((idx) => { 
         if (board[idx] === ''){
             return;
         }
     });
-
+    */
     tie = true;
 };
 
@@ -124,3 +148,5 @@ squareEls.forEach((square) => { /* we have 9 .sqr from qeuery selector all */
 });
 
 resetBtnEl.addEventListener('click', init);
+
+init();

@@ -23,3 +23,7 @@ body {
   display: flex;
   margin-top: 10px;
 }
+
+#message{
+  display: none;
+}
